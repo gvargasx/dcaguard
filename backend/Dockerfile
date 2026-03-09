@@ -8,6 +8,9 @@ RUN mvn package -DskipTests -B
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-COPY dca-guard-dev-firebase.json /app/firebase-credentials.json
+
+ENV GOOGLE_APPLICATION_CREDENTIALS=/app/firebase-service-account.json
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+ENTRYPOINT ["sh", "-c", "if [ -n \"$FIREBASE_SERVICE_ACCOUNT_BASE64\" ]; then echo $FIREBASE_SERVICE_ACCOUNT_BASE64 | base64 -d > /app/firebase-service-account.json; fi && java -jar app.jar"]
