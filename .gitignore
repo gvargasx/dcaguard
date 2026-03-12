@@ -18,7 +18,7 @@ frontend/dist/
 .env.local
 .env.production
 
-# Firebase service account (NEVER commit this)
+# Firebase service account 
 **/firebase-service-account.json
 **/serviceAccountKey.json
 **/*firebase*.json
